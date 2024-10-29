@@ -1,54 +1,136 @@
-## Teste para Desenvolvedor PHP/Laravel
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+# Projeto fornecedores
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+## Configurações do Projeto
 
-## Descrição do Projeto
+1. **Clone o repositório**
 
-### Backend (API Laravel):
+    ```bash
+    git clone https://github.com/ededias/teste-dev-php-edenilson.git
+    cd teste-dev-php
+    ```
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
+1. **Docker**
 
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
+    ```bash
+        // para subir as imagens do docker
+        docker compose up --build -d
+        // para instalar as dependencias do laravel 
+        docker exec -it laravel_app composer install
+        // para rodar as migrations 
+        docker exec -it laravel_app php artisan migrate
+    ```
 
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
+A aplicação ira rodar localhost
 
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+Utilizando a aplicação sem o docker
 
-## Requisitos
+1. **Sem docker**
+    
+    ```bash
+        // instalar as dependencias
+        composer install
+        // rodar as migrations
+        php artisan migrate
+    ```
+    4. **Configure o arquivo `.env`**
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+    Edite o arquivo `.env` para configurar o banco de dados e outras variáveis. Exemplo de configuração para MySQL:
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nome_do_banco
+    DB_USERNAME=usuario
+    DB_PASSWORD=senha
+    ```
+ 
 
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
 
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
+## Documentação da API
 
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+#### Listar fornecedores
 
+```http
+  GET /api/supplier/list?orderBy=asc
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `orderBy` | `string` | Ordena a lista de fornecedores (asc/desc) |
+
+#### Retorna uma lista de fornecedores
+
+```http
+  GET /api/supplier/find/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. O ID do fornecedor que deseja listar que você deseja buscar |
+
+#### retorna a lista um unico fornecedor
+
+```http
+  POST /api/supplier/create/
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `fantasy`      | `string` | **Obrigatório**. Nome fantasia |
+| `social`      | `string` | **Obrigatório**. Razão social |
+| `phone`      | `string` | **Obrigatório**. Telefone de contato |
+| `email`      | `string` | **Obrigatório**. e-mail de contato |
+| `ie`      | `string` | **Obrigatório**. Inscrição estadual |
+| `im`      | `string` | **Obrigatório**. Inscrição municipal |
+| `address`      | `object` | **Obrigatório**. Objeto de dados de endereço |
+| `zipcode`      | `string` | **Obrigatório**. CEP do fornecedor |
+| `street`      | `string` | **Obrigatório**. Logradouro do fornecedor |
+| `number`      | `string` | **Obrigatório**. Numero do fornecedor |
+| `neighborhood`      | `string` | **Obrigatório**. Bairro do fornecedor |
+| `city`      | `string` | **Obrigatório**. Cidade do fornecedor |
+| `state`      | `string` | **Obrigatório**. Estado do fornecedor |
+| `country`      | `string` | **Obrigatório**. País do fornecedor |
+
+#### Realiza o cadastro de um novo fornecedor
+
+
+
+```http
+  PUT /api/supplier/update/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. Id do fornecedor que deseja atualizar |
+| `fantasy`      | `string` | **Obrigatório**. Nome fantasia |
+| `social`      | `string` | **Obrigatório**. Razão social |
+| `phone`      | `string` | **Obrigatório**. Telefone de contato |
+| `email`      | `string` | **Obrigatório**. e-mail de contato |
+| `ie`      | `string` | **Obrigatório**. Inscrição estadual |
+| `im`      | `string` | **Obrigatório**. Inscrição municipal |
+| `address`      | `object` | **Obrigatório**. Objeto de dados de endereço |
+| `zipcode`      | `string` | **Obrigatório**. CEP do fornecedor |
+| `street`      | `string` | **Obrigatório**. Logradouro do fornecedor |
+| `number`      | `string` | **Obrigatório**. Numero do fornecedor |
+| `neighborhood`      | `string` | **Obrigatório**. Bairro do fornecedor |
+| `city`      | `string` | **Obrigatório**. Cidade do fornecedor |
+| `state`      | `string` | **Obrigatório**. Estado do fornecedor |
+| `country`      | `string` | **Obrigatório**. País do fornecedor |
+
+#### Realiza a edição de um fornecedor
+
+```http
+  DELETE /api/supplier/delete/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. Id do fornecedor que deseja atualizar |
+
+#### Realiza a exclusão de um fornecedor
+
+Recebe dois números e retorna a sua soma.
 
