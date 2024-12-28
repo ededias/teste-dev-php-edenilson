@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Supplier;
 use App\Rules\DocumentRule;
 use App\Rules\PhoneRule;
+use App\Service\DocumentBrazilService;
 use App\Service\SupplierService;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
     public function __construct(
-        protected SupplierService $service
+        protected SupplierService $service,
+        protected DocumentBrazilService $documentBrazilService
     ){}
 
     public function all(Request $request)
@@ -26,9 +28,12 @@ class SupplierController extends Controller
     public function create(Request $request)
     {
         $validator = $this->validator($request);
+        
         if ($validator != null) return response()->json($validator['errors']);
         $data = $request->json()->all();
-        $this->service->create($data);
+        $document = $this->documentBrazilService->get($data['document']);
+        if ($document == null) return response()->json(['message' => 'Por favor, forneça um CNPJ valído.'], 404);
+        return $this->service->create($data);
     }
 
     public function find($id) 
@@ -47,8 +52,9 @@ class SupplierController extends Controller
     {
         $validator = $this->validator($request);
         if ($validator != null) return response()->json($validator['errors']);
-        
         $data = $request->json()->all();
+        $document = $this->documentBrazilService->get($data['document']);
+        if ($document == null) return response()->json(['message' => 'Por favor, forneça um CNPJ valído.'], 404);
         $data = $this->service->update($data, $id);
         return $data;
     }
