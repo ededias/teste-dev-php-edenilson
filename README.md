@@ -40,11 +40,11 @@ Utilizando a aplicação sem o docker
 
     ```env
     DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
+    DB_HOST=db
     DB_PORT=3306
-    DB_DATABASE=nome_do_banco
-    DB_USERNAME=usuario
-    DB_PASSWORD=senha
+    DB_DATABASE=laravel
+    DB_USERNAME=laravel_user
+    DB_PASSWORD=secret
     ```
  
 
@@ -85,6 +85,7 @@ Utilizando a aplicação sem o docker
 | `email`      | `string` | **Obrigatório**. e-mail de contato |
 | `ie`      | `string` | **Obrigatório**. Inscrição estadual |
 | `im`      | `string` | **Obrigatório**. Inscrição municipal |
+| `document`      | `string` | **Obrigatório**. CNPJ ou CPF |
 | `address`      | `object` | **Obrigatório**. Objeto de dados de endereço |
 | `zipcode`      | `string` | **Obrigatório**. CEP do fornecedor |
 | `street`      | `string` | **Obrigatório**. Logradouro do fornecedor |
@@ -111,6 +112,7 @@ Utilizando a aplicação sem o docker
 | `email`      | `string` | **Obrigatório**. e-mail de contato |
 | `ie`      | `string` | **Obrigatório**. Inscrição estadual |
 | `im`      | `string` | **Obrigatório**. Inscrição municipal |
+| `document`      | `string` | **Obrigatório**. CNPJ ou CPF |
 | `address`      | `object` | **Obrigatório**. Objeto de dados de endereço |
 | `zipcode`      | `string` | **Obrigatório**. CEP do fornecedor |
 | `street`      | `string` | **Obrigatório**. Logradouro do fornecedor |
